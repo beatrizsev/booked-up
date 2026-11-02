@@ -1,0 +1,13 @@
+.DS_Store
+*.swp
+*~
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+.swiftpm/xcode/package.xcworkspace/xcuserdata/
+.swiftpm/configuration/registries.json
+.env
+.env.*
+*.p12
+*.mobileprovision
