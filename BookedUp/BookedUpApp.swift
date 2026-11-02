@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct BookedUpApp: App {
+    init() {
+        AppTypography.registerFonts()
+        UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(named: "SageGreen")
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor(named: "PaperCream")
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRootView()
         }
     }
 }

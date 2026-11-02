@@ -14,8 +14,8 @@
 | Border | Default Border | `#DDD0BF` |
 
 ## Typography
-- Page title: Playfair Display Regular, 30pt / 36pt line height.
-- Large editorial heading: Playfair Display Regular, 36pt / 43pt.
+- Page title: Playfair Display Semibold, 30pt / 36pt line height (current Figma frames).
+- Large editorial heading: Playfair Display Semibold, 36pt / 43pt.
 - Section heading: SF Pro Semibold, 20pt / 26pt.
 - Book/card title: SF Pro Semibold, 17pt / 22pt.
 - Body: SF Pro Regular, 16pt / 24pt.
@@ -25,15 +25,11 @@
 
 Use Dynamic Type-friendly SwiftUI constructs. Prefer text/background contrast over mechanical fidelity to a mockup.
 
-### Adding Playfair Display later
+### Bundled Playfair Display
 
-Today’s app uses a native serif fallback for page titles and editorial headings, with SF Pro for all other text. `BookedUp/DesignSystem/AppTypography.swift` scales the specified point sizes with Dynamic Type and checks for `PlayfairDisplay-Regular` at runtime.
+`BookedUp/Fonts/PlayfairDisplay.ttf` is the unmodified Google Fonts variable font. Its SIL Open Font License is included alongside it as `PlayfairDisplay-OFL.txt` and is viewable from the local account sheet. Source: https://github.com/google/fonts/tree/main/ofl/playfairdisplay.
 
-1. Obtain the font from its authorised source and check the licence permits bundling it in an iOS app. Keep the required licence / attribution with the project. No font has been downloaded or redistributed in this checkpoint.
-2. Add the licensed Regular `.ttf` or `.otf` file to the existing BookedUp target (for example under `BookedUp/Fonts/`). Verify it is included in **Build Phases → Copy Bundle Resources**.
-3. In **Target → Info**, add **Fonts provided by application** (`UIAppFonts`) as an array containing the bundled filename, including its extension, such as `PlayfairDisplay-Regular.ttf`.
-4. Confirm the font’s actual PostScript name. If it differs from `PlayfairDisplay-Regular`, update `playfairName` in `AppTypography.swift`.
-5. Rebuild and relaunch. Check the title in the simulator at default and accessibility text sizes. The helper switches to Playfair only when registration succeeds; otherwise the serif fallback remains.
+`AppTypography.registerFonts()` registers the bundled font with Core Text at startup and in previews. `BookedUp/DesignSystem/AppTypography.swift` uses the PostScript face `PlayfairDisplayRoman-SemiBold` for page titles and editorial headings, matching the current Figma frames. All other text remains SF Pro. The helper scales point sizes with Dynamic Type and retains a native serif fallback if font registration ever fails. No external package is required.
 
 ## Components
 PrimaryButton; BookCover/BookCard; ReadingProgress; MoodTag; SearchField; TabView shell; Info/Stat card; EmptyState.

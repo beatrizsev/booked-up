@@ -1,8 +1,14 @@
 import SwiftUI
 import UIKit
+import CoreText
 
 enum AppTypography {
     case pageTitle, editorial, sectionHeading, bookTitle, body, secondaryBody, button, caption
+
+    static func registerFonts() {
+        guard let url = Bundle.main.url(forResource: "PlayfairDisplay", withExtension: "ttf") else { return }
+        CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
+    }
 
     var size: CGFloat {
         switch self {
@@ -43,9 +49,12 @@ private struct BookedUpTextStyle: ViewModifier {
     let style: AppTypography
     @ScaledMetric private var scaledSize: CGFloat
 
-    // Only use Playfair when an actual font file has been bundled and registered.
-    private static let playfairName = "PlayfairDisplay-Regular"
-    private static let hasPlayfair = UIFont(name: playfairName, size: 30) != nil
+    // Lazily register here too so Xcode previews use the bundled face.
+    private static let playfairName = "PlayfairDisplayRoman-SemiBold"
+    private static let hasPlayfair: Bool = {
+        AppTypography.registerFonts()
+        return UIFont(name: playfairName, size: 30) != nil
+    }()
 
     init(_ style: AppTypography) {
         self.style = style

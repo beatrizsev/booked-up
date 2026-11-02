@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    var onAccount: (() -> Void)? = nil
+
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
-                HomeView()
+                HomeView(onAccount: onAccount)
             }
             Tab("Discover", systemImage: "magnifyingglass") {
                 PlaceholderView(

@@ -19,6 +19,16 @@
 - Remaining manual QA: scroll to the recommendation metadata/footer, swipe the shelf, test a smaller phone, landscape and iPad. Simulator automation did not move the scroll view, so gesture behaviour is not yet verified.
 - No backend, API, authentication, package dependencies or persistence added. No Git staging or commit performed; the final checklist item remains open for manual QA and the user’s commit.
 
+### November 2 — requested onboarding and local demo account slice
+
+- Scope extended by the user after the Home checkpoint: two original Figma welcome pages, Create Account, Log In, and truthful recovery-preview sheets. No external authentication service or book database.
+- Added simple root routing, one local account, Keychain-only password storage, and `@AppStorage` onboarding/email/session state. Logout preserves the account; confirmed reset removes it and returns to onboarding.
+- Bundled licensed Playfair Display and its OFL notice; retained SF Pro elsewhere. Home remains the sample reading dashboard, with an account menu added for logout/reset.
+- Added an isolated simulator UI test target covering onboarding, validation, masked/visible password entry, create/login/logout, process restarts, duplicate-account protection, both recovery sheets, and account reset.
+- Verification: final signed Debug build and all four UI tests passed on iPhone 17 Pro / iOS 26.5 with Xcode 26.5: 0 failures in 155 seconds. Original Figma illustrations, account forms and both recovery sheets were visually inspected.
+- Fixed dropped characters during masked password entry by simplifying the native field’s focus/autofill configuration; verified both masked creation and masked login. The reset-cancellation test supports iOS 26’s native popover dismissal. The simulator keyboard preference used during diagnosis was restored to its original unset state.
+- Remaining manual QA: authentication layouts at accessibility text sizes, VoiceOver, landscape, smaller phones and iPad. No commit or push performed.
+
 ## Tue, Nov 3 — Discover + Library (3h)
 - [ ] Implement searchable curated local books list.
 - [ ] Implement Book Details and Add to Library interaction.
@@ -33,7 +43,7 @@
 
 ## Thu, Nov 5 — Stats + Polish (3h)
 - [ ] Implement reading stats from actual local records (books finished, pages read, average rating).
-- [ ] Implement two welcome/onboarding slides with a functioning Continue/Get Started flow if time allows.
+- [x] Implement two welcome/onboarding slides with a functioning Continue/Get Started flow (completed in the requested November 2 slice).
 - [ ] Fix UI discrepancies, loading/empty states, accessibility and crashes.
 - [ ] Cut live API integration if it interferes with delivery.
 
@@ -44,4 +54,4 @@
 - [ ] Publish portfolio project and LinkedIn post with correct links.
 
 ## Out of scope
-Working account creation/login/password reset, social features, notification systems, cloud sync, App Store release, API-backed recommendations. A Google Books search is stretch only.
+External authentication services, real email/password recovery, social features, notification systems, cloud sync, App Store release, API-backed recommendations. Local demo account creation/login was explicitly added by the user on November 2. A Google Books search is stretch only.

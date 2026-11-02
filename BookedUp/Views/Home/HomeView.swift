@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    var onAccount: (() -> Void)? = nil
     @ScaledMetric(relativeTo: .caption) private var bookWidth = 113.0
 
     private var greeting: String {
@@ -14,13 +15,25 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(greeting)
-                        .bookedUpText(.body)
-                        .foregroundStyle(AppColor.secondaryText)
-                    Text(HomeSampleData.readerName)
-                        .bookedUpText(.pageTitle)
-                        .accessibilityAddTraits(.isHeader)
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(greeting)
+                            .bookedUpText(.body)
+                            .foregroundStyle(AppColor.secondaryText)
+                        Text(HomeSampleData.readerName)
+                            .bookedUpText(.pageTitle)
+                            .accessibilityAddTraits(.isHeader)
+                    }
+                    Spacer()
+                    if let onAccount {
+                        Button(action: onAccount) {
+                            Image(systemName: "person.crop.circle")
+                                .font(.title2)
+                                .frame(width: 44, height: 44)
+                        }
+                        .accessibilityLabel("Demo account")
+                        .accessibilityIdentifier("home.account")
+                    }
                 }
 
                 CurrentlyReadingCard(reading: HomeSampleData.currentlyReading)
