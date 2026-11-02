@@ -6,8 +6,6 @@ struct AppRootView: View {
     @State private var mode: AuthenticationView.Mode = .logIn
     @State private var replayWelcome = false
     @State private var showAccount = false
-    @State private var isShowingSplash = true
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init() {
         let configuration = DemoStorage.configuration
@@ -19,33 +17,6 @@ struct AppRootView: View {
     }
 
     var body: some View {
-        ZStack {
-            if isShowingSplash {
-                SplashScreenView {
-                    withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
-                        isShowingSplash = false
-                    }
-                }
-                .transition(.opacity)
-                .zIndex(1)
-            } else {
-                destination.transition(.opacity)
-            }
-        }
-        .foregroundStyle(AppColor.primaryText)
-        .tint(AppColor.primaryText)
-        .background(AppColor.background)
-        .preferredColorScheme(.light)
-        .sheet(isPresented: $showAccount) {
-            LocalAccountView(auth: auth, onLogOut: {
-                showAccount = false
-                mode = .logIn
-                auth.logOut()
-            }, onReset: resetDemo)
-        }
-    }
-
-    private var destination: some View {
         Group {
             if auth.isSignedIn {
                 ContentView(onAccount: { showAccount = true })
@@ -63,6 +34,17 @@ struct AppRootView: View {
                     onReset: resetDemo
                 )
             }
+        }
+        .foregroundStyle(AppColor.primaryText)
+        .tint(AppColor.primaryText)
+        .background(AppColor.background)
+        .preferredColorScheme(.light)
+        .sheet(isPresented: $showAccount) {
+            LocalAccountView(auth: auth, onLogOut: {
+                showAccount = false
+                mode = .logIn
+                auth.logOut()
+            }, onReset: resetDemo)
         }
     }
 
