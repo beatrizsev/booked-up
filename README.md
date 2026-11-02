@@ -15,6 +15,14 @@ A SwiftUI reading companion for the November 2–6, 2026 portfolio sprint, with 
 
 Home is a read-only preview. Its reader, progress, challenge and ratings are sample data. Search, details, saving, editing and actual statistics belong to later sprint slices. There is no book database, external authentication, networking or external package dependency. Local demo authentication is for demonstrating the case-study flow, not production account security.
 
+## Splash screen
+
+Cold launches show the original Figma badge from frame `166:3054`, centered at 264 points on the existing cream background. A native static launch screen matches the opening frame; SwiftUI then rocks the badge clockwise and counterclockwise by 5 degrees over 3.2 seconds before fading into onboarding, Log In or Home. It does not replay when switching tabs or returning from the background. With Reduce Motion enabled, the badge stays still for 0.8 seconds and transitions without animation.
+
+Implementation: `BookedUp/Views/Shared/SplashScreenView.swift`, `BookedUp/LaunchScreen.storyboard`, `BookedUp/Assets.xcassets/SplashBadge.imageset`, and the existing `AppRootView.swift`. To preview again, stop and relaunch the app; no account reset is needed.
+
+Validation: signed Debug build and the existing onboarding/account/session lifecycle UI test passed on iPhone 17 Pro / iOS 26.5. Simulator captures confirm the original badge’s proportions, centered placement, both rotation directions and transition to the signed-out destination. Reduce Motion and other device sizes remain manual checks.
+
 ## Local demo account
 
 First launch shows onboarding. **Get started** opens Create Account; **I already have an account** opens Log In. Completing either welcome action persists onboarding completion. Creating an account signs in immediately. Relaunching restores a signed-in session; after logout, relaunching shows Log In. Use Home’s account icon to log out without deleting the account.
